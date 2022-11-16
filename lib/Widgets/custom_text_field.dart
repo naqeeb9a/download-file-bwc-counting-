@@ -6,6 +6,7 @@ class FormTextField extends StatefulWidget {
   final TextInputType keyboardtype;
   final bool isPass;
   final String? Function(String?)? function;
+  final void Function(String)? onchanged;
   final int? maxLength;
   const FormTextField(
       {Key? key,
@@ -14,7 +15,8 @@ class FormTextField extends StatefulWidget {
       this.keyboardtype = TextInputType.text,
       this.isPass = false,
       this.function,
-      this.maxLength})
+      this.maxLength,
+      this.onchanged})
       : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class _FormTextFieldState extends State<FormTextField> {
       obscureText: widget.isPass ? isVisible : false,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLength: widget.maxLength,
+      onChanged: widget.onchanged,
       validator: widget.function,
       decoration: InputDecoration(
           counterText: "",

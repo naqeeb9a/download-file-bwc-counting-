@@ -33,6 +33,8 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     LoginModel? userData = context.read<UserDataProvider>().userData;
@@ -163,77 +165,114 @@ class _DetailScreenState extends State<DetailScreen> {
       );
     }
     context.read<CapturedFiles>().enrollDataFile(
-        CaptureFile(selectedSociety, detailsModelView.detailsModel!));
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-          dataRow(
-              "Name:",
-              detailsModelView.detailsModel!.data!.verification!.memberName ??
-                  ""),
-          dataRow(
-              "Registration number:",
-              detailsModelView.detailsModel!.data!.verification!.regNumber ??
-                  ""),
-          dataRow(
-              "Plot size:",
-              detailsModelView.detailsModel!.data!.verification!.plotSize ??
-                  ""),
-          dataRow("Form no:",
-              detailsModelView.detailsModel!.data!.verification!.formNo ?? ""),
-          dataRow(
-            "Project name:",
-            selectedSociety.toString().substring(
-                  0,
-                  selectedSociety.toString().indexOf('@'),
-                ),
-          ),
-          dataRow(
-              "Cnic:",
-              detailsModelView.detailsModel!.data!.verification!.memberCnic ??
-                  ""),
-          dataRow("ID:",
-              detailsModelView.detailsModel!.data!.verification!.id.toString()),
-          const SizedBox(
-            height: 40,
-          ),
-          CustomButton(
-              buttonColor: primaryColor,
-              text: "Next QR",
-              textColor: kWhite,
-              height: 100,
-              function: () {
-                KRoutes.pop(context);
+        CaptureFile(selectedSociety, detailsModelView.detailsModel!, "", ""));
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            dataRow(
+                "Name:",
+                detailsModelView.detailsModel!.data!.verification!.memberName ??
+                    ""),
+            dataRow(
+                "Registration number:",
+                detailsModelView.detailsModel!.data!.verification!.regNumber ??
+                    ""),
+            dataRow(
+                "Plot size:",
+                detailsModelView.detailsModel!.data!.verification!.plotSize ??
+                    ""),
+            dataRow(
+                "Form no:",
+                detailsModelView.detailsModel!.data!.verification!.formNo ??
+                    ""),
+            dataRow(
+              "Project name:",
+              selectedSociety.toString().substring(
+                    0,
+                    selectedSociety.toString().indexOf('@'),
+                  ),
+            ),
+            dataRow(
+                "Cnic:",
+                detailsModelView.detailsModel!.data!.verification!.memberCnic ??
+                    ""),
+            dataRow(
+                "ID:",
+                detailsModelView.detailsModel!.data!.verification!.id
+                    .toString()),
+            const CustomText(text: "Rack number"),
+            const SizedBox(
+              height: 5,
+            ),
+            FormTextField(
+                controller: _controller2,
+                onchanged: (value) {
+                  context.read<CapturedFiles>().enrollDataFile(CaptureFile(
+                      selectedSociety,
+                      detailsModelView.detailsModel!,
+                      _controller2.text,
+                      _controller3.text));
+                },
+                suffixIcon: const Icon(Icons.numbers)),
+            const SizedBox(
+              height: 5,
+            ),
+            const CustomText(text: "Serial number"),
+            const SizedBox(
+              height: 5,
+            ),
+            FormTextField(
+                controller: _controller3,
+                onchanged: (value) {
+                  context.read<CapturedFiles>().enrollDataFile(CaptureFile(
+                      selectedSociety,
+                      detailsModelView.detailsModel!,
+                      _controller2.text,
+                      _controller3.text));
+                },
+                suffixIcon: const Icon(Icons.numbers)),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+                buttonColor: primaryColor,
+                text: "Next QR",
+                textColor: kWhite,
+                function: () {
+                  KRoutes.pop(context);
 
-                KRoutes.push(context, const QRScreen());
-              }),
-          const Spacer(),
-          CustomButton(
-              buttonColor: primaryColor,
-              text: "Next Reg",
-              textColor: kWhite,
-              invert: true,
-              function: () {
-                Functionality.openDialogue(context, _controller, true);
-              }),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomButton(
-              buttonColor: primaryColor,
-              text: "Export scanned files   ${scannedFiles.length}",
-              textColor: kWhite,
-              invert: true,
-              function: () {
-                context.read<CapturedFiles>().exportFileToExcel();
-              }),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+                  KRoutes.push(context, const QRScreen());
+                }),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+                buttonColor: primaryColor,
+                text: "Next Reg",
+                textColor: kWhite,
+                invert: true,
+                function: () {
+                  Functionality.openDialogue(context, _controller, true);
+                }),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+                buttonColor: primaryColor,
+                text: "Export scanned files   ${scannedFiles.length}",
+                textColor: kWhite,
+                invert: true,
+                function: () {
+                  context.read<CapturedFiles>().exportFileToExcel();
+                }),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,14 @@ class CapturedFiles extends ChangeNotifier {
   final List<CaptureFile?> _captureFileList = [];
   List<CaptureFile?> get captureFileList => _captureFileList;
   void enrollDataFile(CaptureFile? captureFile) {
+    int index = _captureFileList.indexWhere((element) =>
+        element!.detailsModel.data!.verification!.id ==
+        captureFile!.detailsModel.data!.verification!.id);
+    if (index != -1) {
+      _captureFileList[index]!.rackNum = captureFile!.rackNum;
+      _captureFileList[index]!.serialNum = captureFile.serialNum;
+      return;
+    }
     _captureFileList.add(captureFile);
   }
 
@@ -37,6 +45,8 @@ class CapturedFiles extends ChangeNotifier {
     sheet.getRangeByName('E1').setText('Form no');
     sheet.getRangeByName('F1').setText('Plot size');
     sheet.getRangeByName('G1').setText('Member Cnic');
+    sheet.getRangeByName('H1').setText('Rack Number');
+    sheet.getRangeByName('I1').setText('Serial Number');
     sheet.getRangeByName('A1').cellStyle = globalStyle;
     sheet.getRangeByName('B1').cellStyle = globalStyle;
     sheet.getRangeByName('C1').cellStyle = globalStyle;
@@ -44,6 +54,8 @@ class CapturedFiles extends ChangeNotifier {
     sheet.getRangeByName('E1').cellStyle = globalStyle;
     sheet.getRangeByName('F1').cellStyle = globalStyle;
     sheet.getRangeByName('G1').cellStyle = globalStyle;
+    sheet.getRangeByName('H1').cellStyle = globalStyle;
+    sheet.getRangeByName('I1').cellStyle = globalStyle;
     for (var i = 2; i <= _captureFileList.length + 1; i++) {
       sheet.getRangeByName("A$i").setText(_captureFileList[i - 2]!
           .detailsModel
@@ -74,6 +86,8 @@ class CapturedFiles extends ChangeNotifier {
               .verification!
               .memberCnic ??
           "".toString());
+      sheet.getRangeByName("H$i").setText(_captureFileList[i - 2]!.rackNum);
+      sheet.getRangeByName("I$i").setText(_captureFileList[i - 2]!.serialNum);
     }
 
     final List<int> bytes = workbook.saveAsStream();
@@ -87,6 +101,9 @@ class CapturedFiles extends ChangeNotifier {
 
 class CaptureFile {
   String projectName;
+  String rackNum;
+  String serialNum;
   DetailsModel detailsModel;
-  CaptureFile(this.projectName, this.detailsModel);
+  CaptureFile(
+      this.projectName, this.detailsModel, this.rackNum, this.serialNum);
 }

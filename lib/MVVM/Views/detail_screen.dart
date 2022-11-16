@@ -201,6 +201,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             FormTextField(
                 controller: _controller2,
+                keyboardtype: TextInputType.number,
                 onchanged: (value) {
                   context.read<CapturedFiles>().enrollDataFile(CaptureFile(
                       detailsModelView.detailsModel!,
@@ -217,6 +218,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             FormTextField(
                 controller: _controller3,
+                keyboardtype: TextInputType.number,
                 onchanged: (value) {
                   context.read<CapturedFiles>().enrollDataFile(CaptureFile(
                       detailsModelView.detailsModel!,

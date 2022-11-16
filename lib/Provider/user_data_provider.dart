@@ -28,13 +28,3 @@ class UserDataProvider extends ChangeNotifier {
   }
 }
 
-class SelectedSoceityProvider extends ChangeNotifier {
-  String? selectedSoceity, id;
-
-  SelectedSoceityProvider({this.selectedSoceity, this.id});
-  void updateSelectedSociety(String value, String idNo) {
-    selectedSoceity = value;
-    id = idNo;
-    notifyListeners();
-  }
-}

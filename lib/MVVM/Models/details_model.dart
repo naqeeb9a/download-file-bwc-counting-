@@ -55,6 +55,7 @@ class Verification {
     required this.serialNo,
     required this.plotSize,
     required this.memberName,
+    required this.societyName,
     required this.memberCnic,
     required this.formNo,
     required this.memberId,
@@ -69,6 +70,7 @@ class Verification {
   final int? serialNo;
   final String? plotSize;
   final String? memberName;
+  final String? societyName;
   final String? memberCnic;
   final String? formNo;
   final int? memberId;
@@ -83,6 +85,7 @@ class Verification {
         serialNo: json["serial_no"],
         plotSize: json["plot_size"],
         memberName: json["member_name"],
+        societyName: json["society_name"],
         memberCnic: json["member_cnic"],
         formNo: json["form_no"],
         memberId: json["member_id"],
@@ -98,6 +101,7 @@ class Verification {
         "serial_no": serialNo,
         "plot_size": plotSize,
         "member_name": memberName,
+        "society_name": societyName,
         "member_cnic": memberCnic,
         "form_no": formNo,
         "member_id": memberId,

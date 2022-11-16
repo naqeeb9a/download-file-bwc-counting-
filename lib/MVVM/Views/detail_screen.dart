@@ -19,12 +19,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Screens/QRScreen/qr_screen.dart';
 
 class DetailScreen extends StatefulWidget {
-  final String? code, id;
+  final String? code;
 
   const DetailScreen({
     Key? key,
     required this.code,
-    required this.id,
   }) : super(key: key);
 
   @override
@@ -38,8 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     LoginModel? userData = context.read<UserDataProvider>().userData;
-    String? selectedSociety =
-        context.read<SelectedSoceityProvider>().selectedSoceity;
+
     List<CaptureFile?> scannedFiles =
         context.read<CapturedFiles>().captureFileList;
     DetailsModelView detailsModelView = context.watch<DetailsModelView>();
@@ -93,13 +91,12 @@ class _DetailScreenState extends State<DetailScreen> {
               automaticallyImplyLeading: true,
               widgets: const [],
               appBarHeight: 50),
-          body: detailsView(
-              selectedSociety!, userData!, detailsModelView, scannedFiles)),
+          body: detailsView(userData!, detailsModelView, scannedFiles)),
     );
   }
 
-  Widget detailsView(String selectedSociety, LoginModel userData,
-      DetailsModelView detailsModelView, List<CaptureFile?> scannedFiles) {
+  Widget detailsView(LoginModel userData, DetailsModelView detailsModelView,
+      List<CaptureFile?> scannedFiles) {
     if (detailsModelView.loading) {
       return const CustomLoader();
     }
@@ -164,8 +161,9 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
       );
     }
-    context.read<CapturedFiles>().enrollDataFile(
-        CaptureFile(selectedSociety, detailsModelView.detailsModel!, "", ""));
+    context
+        .read<CapturedFiles>()
+        .enrollDataFile(CaptureFile(detailsModelView.detailsModel!, "", ""));
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -189,20 +187,14 @@ class _DetailScreenState extends State<DetailScreen> {
                 detailsModelView.detailsModel!.data!.verification!.formNo ??
                     ""),
             dataRow(
-              "Project name:",
-              selectedSociety.toString().substring(
-                    0,
-                    selectedSociety.toString().indexOf('@'),
-                  ),
-            ),
-            dataRow(
                 "Cnic:",
                 detailsModelView.detailsModel!.data!.verification!.memberCnic ??
                     ""),
             dataRow(
-                "ID:",
-                detailsModelView.detailsModel!.data!.verification!.id
-                    .toString()),
+                "Project name:",
+                detailsModelView
+                        .detailsModel!.data!.verification!.societyName ??
+                    ""),
             const CustomText(text: "Rack number"),
             const SizedBox(
               height: 5,
@@ -211,7 +203,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 controller: _controller2,
                 onchanged: (value) {
                   context.read<CapturedFiles>().enrollDataFile(CaptureFile(
-                      selectedSociety,
                       detailsModelView.detailsModel!,
                       _controller2.text,
                       _controller3.text));
@@ -228,7 +219,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 controller: _controller3,
                 onchanged: (value) {
                   context.read<CapturedFiles>().enrollDataFile(CaptureFile(
-                      selectedSociety,
                       detailsModelView.detailsModel!,
                       _controller2.text,
                       _controller3.text));

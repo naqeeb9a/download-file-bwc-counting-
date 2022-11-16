@@ -8,9 +8,9 @@ import 'package:downloadfile/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 class DetailsService {
-  static Future<Object> getDetails(String code, String id, String token) async {
+  static Future<Object> getDetails(String code, String token) async {
     try {
-      var url = Uri.parse("$domainName/api/scan/scancode?$code&society_id=$id");
+      var url = Uri.parse("$domainName/api/scan/scancodewithoutsoc?$code");
       Map<String, String> headers = {
         "last_login_token": token,
       };

@@ -22,7 +22,6 @@ class _QRScreenState extends State<QRScreen> {
   MobileScannerController cameraController = MobileScannerController();
   @override
   Widget build(BuildContext context) {
-    String? societyId = Provider.of<SelectedSoceityProvider>(context).id;
     return Scaffold(
         appBar: BaseAppBar(
             title: "Scan QR",
@@ -87,7 +86,6 @@ class _QRScreenState extends State<QRScreen> {
                       context.read<DetailsModelView>().setModelError(null);
                       context.read<DetailsModelView>().getDetails(
                           "qr_code=$code",
-                          societyId.toString(),
                           context
                               .read<UserDataProvider>()
                               .userData!
@@ -99,7 +97,6 @@ class _QRScreenState extends State<QRScreen> {
                           context,
                           DetailScreen(
                             code: "qr_code=$code",
-                            id: societyId,
                           ));
                     }
                   }),

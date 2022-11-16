@@ -26,9 +26,9 @@ class DetailsModelView extends ChangeNotifier {
     _modelError = modelError;
   }
 
-  Future<void> getDetails(String code, String id, String token) async {
+  Future<void> getDetails(String code, String token) async {
     setLoading(true);
-    var response = await DetailsService.getDetails(code, id, token);
+    var response = await DetailsService.getDetails(code, token);
     if (response is Success) {
       setPostModelList(response.response as DetailsModel);
     }

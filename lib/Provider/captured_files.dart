@@ -70,7 +70,11 @@ class CapturedFiles extends ChangeNotifier {
               .verification!
               .memberName ??
           "".toString());
-      sheet.getRangeByName("C$i").setText(_captureFileList[i - 2]!.projectName);
+      sheet.getRangeByName("C$i").setText(_captureFileList[i - 2]!
+          .detailsModel
+          .data!
+          .verification!
+          .societyName);
       sheet.getRangeByName("D$i").setText(
           _captureFileList[i - 2]!.detailsModel.data!.verification!.regNumber ??
               "".toString());
@@ -100,10 +104,8 @@ class CapturedFiles extends ChangeNotifier {
 }
 
 class CaptureFile {
-  String projectName;
   String rackNum;
   String serialNum;
   DetailsModel detailsModel;
-  CaptureFile(
-      this.projectName, this.detailsModel, this.rackNum, this.serialNum);
+  CaptureFile(this.detailsModel, this.rackNum, this.serialNum);
 }

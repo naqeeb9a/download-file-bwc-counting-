@@ -14,8 +14,7 @@ import '../utils/utils.dart';
 class Functionality {
   static openDialogue(
       BuildContext context, TextEditingController controller, bool check) {
-    String? societyId =
-        Provider.of<SelectedSoceityProvider>(context, listen: false).id;
+ 
     showDialog(
         context: context,
         builder: (context) {
@@ -70,7 +69,6 @@ class Functionality {
                       context.read<DetailsModelView>().setModelError(null);
                       context.read<DetailsModelView>().getDetails(
                           "reg_no=${controller.text}",
-                          societyId.toString(),
                           context
                               .read<UserDataProvider>()
                               .userData!
@@ -81,7 +79,7 @@ class Functionality {
                           context,
                           DetailScreen(
                             code: "reg_no=${controller.text}",
-                            id: societyId,
+                          
                           ));
                       controller.clear();
                     }

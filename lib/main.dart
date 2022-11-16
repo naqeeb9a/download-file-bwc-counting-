@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserDataProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => SelectedSoceityProvider(),
-        ),
+       
         ChangeNotifierProvider(
           create: (context) => SocietyModelView(),
         ),

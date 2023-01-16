@@ -46,7 +46,8 @@ class CapturedFiles extends ChangeNotifier {
     sheet.getRangeByName('F1').setText('Plot size');
     sheet.getRangeByName('G1').setText('Member Cnic');
     sheet.getRangeByName('H1').setText('Rack Number');
-    sheet.getRangeByName('I1').setText('Serial Number');
+    sheet.getRangeByName('I1').setText('Custom Serial Number');
+    sheet.getRangeByName('J1').setText('System Serial Number');
     sheet.getRangeByName('A1').cellStyle = globalStyle;
     sheet.getRangeByName('B1').cellStyle = globalStyle;
     sheet.getRangeByName('C1').cellStyle = globalStyle;
@@ -56,6 +57,7 @@ class CapturedFiles extends ChangeNotifier {
     sheet.getRangeByName('G1').cellStyle = globalStyle;
     sheet.getRangeByName('H1').cellStyle = globalStyle;
     sheet.getRangeByName('I1').cellStyle = globalStyle;
+    sheet.getRangeByName('J1').cellStyle = globalStyle;
     for (var i = 2; i <= _captureFileList.length + 1; i++) {
       sheet.getRangeByName("A$i").setText(_captureFileList[i - 2]!
           .detailsModel
@@ -92,6 +94,12 @@ class CapturedFiles extends ChangeNotifier {
           "".toString());
       sheet.getRangeByName("H$i").setText(_captureFileList[i - 2]!.rackNum);
       sheet.getRangeByName("I$i").setText(_captureFileList[i - 2]!.serialNum);
+      sheet.getRangeByName("J$i").setText(_captureFileList[i - 2]
+          ?.detailsModel
+          .data
+          ?.verification
+          ?.serialNo
+          .toString());
     }
 
     final List<int> bytes = workbook.saveAsStream();
